@@ -1,0 +1,52 @@
+Notes on my project:
+
+MuZero uses the representation network to embed the current observation, WorldModels uses a variational autoencoder.
+MuZero uses the dynamics network to model the imagined environment, WorldModel uses a recurrent neural network.
+MuZero uses MCTS and a prediction network to select an action, World Models uses an evolutionary process to evolve an optimal
+action controller.
+
+
+
+
+
+How does MuZero work? This is a very high level overview...
+Given a known state, s, function h returns the state representation Hs 
+H(es) -> (hs)
+
+given Hs function f predicts the current policy [probability distrbution over all moves] and value [estimation of future rewards]
+F(hs) -> (p, v)
+
+given current Hs and possible action a function g returns predicted reward r and the new hidden state Hs
+G(hs, a) -> (r, hs)
+
+
+
+in order to compute the actual rewards, values and policies for back propagation reasons the network must finish the game and the
+environment must calculate the rewards...
+
+This is okay if the task is defined and rewards can be given by an external source. But with humans the rewards are generated in
+our brains by reward networks that have been pruned by evolution/ trial and error to get results that make us live longer + 
+reproduce.
+
+I therefor suggest that the rewards be given by an agent's own reward network. This can be optimised through gradient decent and
+back propagation by maximising an agent's time alive/ reproduction rate in a given randomised environment. Thus the reward network
+should reward things that keep the agent alive and increase the population... hopefully...
+--- Maybe it can't be done through back propagation as this would result in each agent having the same reward network which in 
+my case i think would be undesireable as it wouldn't allow for a decent exploration of the reward network space.
+
+Given that the agents won't be playing a perfect information game they shouldn’t have to or should I say couldn't possibly plan
+much more than 1-2 moves ahead in a normal situation. If they wanted to plan further ahead they would have to build some sort of
+framework of reality inside of thier internal state in which they can think through the different actions that they could take...
+--- Given this I don't think that the agent should preform a monte carlo tree search to find the "Optimum solution" Maybe it
+just samples from the possible actions and considers only the next position based on its internal representation then chooses 
+one stochastically based on what it thinks will have the best long term result...
+
+The tree search algorithm seems very efficeint so I think anything that begins to try and predict the future: which will
+increase survival odds will have to converge upon
+
+One think to keep in mind is that the brain tends to group thoughts and networks based on the situation or the internal and
+external state. Therfore it should probably be training individual networks to deal with different situations this kind of
+modularity in using different networks for achiving different goals but the same internal representation and reward system might
+give way to an agent that can get good enough at tasks using a different small neural network for each task. The agent would
+need a way to cluster similar tasks that could possibly use the same base network to reduce training... It might also need a
+different reward network for each different task..
