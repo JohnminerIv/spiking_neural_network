@@ -2,6 +2,15 @@
 
 The goal of this project is to implement and train an SNN in a modular way.
 
+Usage:
+
+Clone the repo \
+`$ python3 -m pip install -r requirements.txt` \
+`$ jupyter notebook` \
+Then open the file with the name the_project.ipynb
+
+
+
 ## Project Summary: 
 ### What is the goal? What do I plan to have accomplished by the end of the project?
 The goal is to build a simple framework that I and possibly others can use to rapidly develop and train SNNs. This means I should have an interface to decide how many neurons are in the network, what the inputs should be, what the output should be and the type of learning algorithm the network should use.\
